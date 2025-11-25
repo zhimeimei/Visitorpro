@@ -1,0 +1,5 @@
+{
+  "name": "VisitorPro 访客管理系统",
+  "description": "机构内部使用的专业访客管理平台，集成月历视图、筹备清单管理及微信简报生成功能。",
+  "requestFramePermissions": []
+}

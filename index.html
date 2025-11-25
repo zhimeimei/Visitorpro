@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VisitorPro 访客管理系统</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              serif: ['"Noto Serif SC"', '"Songti SC"', 'serif'],
+              sans: ['"Inter"', '"system-ui"', 'sans-serif'],
+              calligraphy: ['"Ma Shan Zheng"', '"Xingkai SC"', '"STXingkai"', 'cursive'],
+            },
+            colors: {
+              // Rice Paper / Warm White (Base)
+              stone: {
+                50: '#fdfcfb', 
+                100: '#f7f5f2',
+                200: '#efece6',
+                300: '#e0dbd1',
+                400: '#d2cabd',
+                500: '#a89f91',
+                600: '#8c8375',
+                700: '#5c564c',
+                800: '#454039',
+                900: '#292524',
+              },
+              // Spring Breeze / Celadon (Low Saturation, Airy Green)
+              zen: {
+                50: '#f5f8f7',
+                100: '#e8efec',
+                200: '#d3e0db',
+                300: '#b4c9c1',
+                400: '#91aca1',
+                500: '#739086', // Main Sage Green
+                600: '#5a756b',
+                700: '#485e56',
+                800: '#3d4d47',
+                900: '#333f3b',
+              },
+              // Muted Wood / Dried Bamboo (Accent)
+              wood: {
+                50: '#f9f8f4',
+                100: '#f0ece3',
+                200: '#e0d6c3',
+                300: '#cbbba0',
+                400: '#b69e78',
+                500: '#9f865d',
+                600: '#806946',
+                700: '#635036',
+              }
+            },
+            animation: {
+              'float': 'float 6s ease-in-out infinite',
+              'fade-in': 'fadeIn 0.8s ease-out forwards',
+              'slide-up': 'slideUp 0.6s ease-out forwards',
+            },
+            keyframes: {
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-10px)' },
+              },
+              fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              },
+              slideUp: {
+                '0%': { opacity: '0', transform: 'translateY(20px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200;300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+    <style>
+      /* Hide scrollbar for clean modal look */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      body {
+        font-family: "system-ui", sans-serif;
+      }
+      h1, h2, h3, h4, .serif {
+        font-family: "Noto Serif SC", "Songti SC", serif;
+      }
+      .rice-paper-texture {
+        background-color: #fdfcfb;
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23a89f91' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.554.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-stone-50 text-stone-800">
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>

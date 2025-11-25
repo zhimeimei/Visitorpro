@@ -175,11 +175,34 @@ const VisitDetailModal: React.FC<VisitDetailModalProps> = ({ visit, onClose, onU
     if (!people || people.length === 0) return null;
 
     const isPhone = context === 'phone_export';
-    // Reduced font size for tags in phone export as well to match text reduction
-    const baseClasses = isPhone 
-        ? "text-[1.8rem] px-3 py-1 rounded-lg border ml-4 align-middle relative -top-1" 
-        : "text-[0.65em] px-1.5 py-0.5 rounded border ml-2 align-middle";
+    
+    // --- PHONE EXPORT STYLE ---
+    if (isPhone) {
+        // Increased font size (~30% bigger than previous 1.8rem -> 2.5rem)
+        // Bolder colors for "more eye-catching" look
+        // Adjusted positioning: relative top-3 (moved down ~20% relative to text line height)
+        // Center alignment: inline-flex + items-center + justify-center
+        return (
+            <span className="inline-flex flex-wrap gap-2 ml-4 relative top-3">
+                {people.map((p, idx) => (
+                    <span 
+                        key={idx} 
+                        className={`text-[2.5rem] px-6 py-1.5 rounded-xl border-2 font-serif font-medium inline-flex items-center justify-center whitespace-nowrap shadow-sm
+                            ${p === 'Teacher' 
+                                ? 'bg-[#e8dcc5] text-[#5c4a2e] border-[#cfc0a3]' // Bolder Wood/Gold
+                                : 'bg-[#cce3dc] text-[#344e46] border-[#abcbc2]' // Bolder Celadon/Green
+                            }`}
+                        style={{ minHeight: '1.3em' }} // Helper for vertical center
+                    >
+                        {p === 'Teacher' ? '老师' : p}
+                    </span>
+                ))}
+            </span>
+        );
+    }
 
+    // --- WEB STYLE ---
+    const baseClasses = "text-[0.65em] px-1.5 py-0.5 rounded border ml-2 align-middle";
     return (
         <span className="inline-flex flex-wrap gap-1 align-middle">
             {people.map((p, idx) => (
@@ -449,8 +472,9 @@ const VisitDetailModal: React.FC<VisitDetailModalProps> = ({ visit, onClose, onU
                {sortedDates.map((date, idx) => (
                   <div key={idx} className="relative">
                      {/* Date Header */}
+                     {/* Font reduced by 10% (from 6rem to 5.4rem) */}
                      <div className="flex items-end gap-8 mb-16 border-l-8 border-zen-600 pl-8">
-                        <h2 className="text-[6rem] font-bold text-zen-800 leading-none">{date}</h2>
+                        <h2 className="text-[5.4rem] font-bold text-zen-800 leading-none">{date}</h2>
                      </div>
                      
                      {/* Events Grid - Strict Alignment Mode */}
@@ -477,7 +501,7 @@ const VisitDetailModal: React.FC<VisitDetailModalProps> = ({ visit, onClose, onU
                               <div className="w-1 bg-stone-200 self-stretch rounded-full mx-12"></div>
                               
                               {/* Content Column */}
-                              {/* Activity Text has pt-0 or pt-1. Time has pt-4. This effectively moves time down relative to text. */}
+                              {/* Activity Text has pt-0. Time has pt-4. This effectively moves time down relative to text. */}
                               <div className="flex-1">
                                   <div className="text-[3.4rem] text-stone-800 font-bold leading-none mb-4 pt-0">
                                       <span className="inline align-middle">{item.activity}</span>

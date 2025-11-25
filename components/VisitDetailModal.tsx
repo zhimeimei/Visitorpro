@@ -401,22 +401,23 @@ const VisitDetailModal: React.FC<VisitDetailModalProps> = ({ visit, onClose, onU
         {/* --- Hidden Container: Teacher Schedule (Only shows Teacher tags) --- */}
         <div className="absolute -left-[9999px] top-0">
           <div ref={teacherScheduleRef} className="w-[800px] bg-stone-50 p-10 rice-paper-texture">
-            <div className="text-center pb-6 mb-6 border-b border-stone-200">
-               <div className="inline-block w-14 h-14 border-2 border-zen-700 rounded-full flex items-center justify-center mb-4">
-                   <span className="font-serif font-bold text-3xl text-zen-700">师</span>
+            <div className="text-center pb-4 mb-4 border-b border-stone-200">
+               <div className="inline-block w-16 h-16 border-2 border-zen-700 rounded-full flex items-center justify-center mb-3">
+                   <span className="font-serif font-bold text-4xl text-zen-700">师</span>
                </div>
-              <h1 className="text-4xl font-serif font-bold text-zen-900 mb-2">老师行程安排</h1>
-              <p className="text-wood-600 text-xl font-serif">{localVisit.visitorName} {localVisit.visitorTitle}</p>
+              <h1 className="text-[3.5rem] font-serif font-bold text-zen-900 mb-2">老师行程安排</h1>
+              <p className="text-wood-600 text-2xl font-serif">{localVisit.visitorName} {localVisit.visitorTitle}</p>
             </div>
             <div className="space-y-6">
               {teacherEvents.map((item, i) => (
-                <div key={i} className="flex pl-4 items-start">
-                   <div className="w-40 shrink-0 text-right pr-6 pt-1 border-r border-wood-300">
-                     <div className="text-2xl font-serif font-bold text-stone-800">{item.date.split('-').slice(1).join('.')}</div>
-                     <div className="text-xl text-wood-600 font-medium mt-1">{item.time}</div>
+                <div key={i} className="flex pl-2 items-start">
+                   {/* Teacher Schedule: Date/Time Font increased to 2.15rem, Alignment moved up by 4% (-translate-y-[4%]) */}
+                   <div className="w-44 shrink-0 text-right pr-4 pt-0 -mt-2 border-r border-wood-300 transform -translate-y-[4%]">
+                     <div className="text-[2.15rem] font-serif font-bold text-stone-800 leading-tight">{item.date.split('-').slice(1).join('.')}</div>
+                     <div className="text-[2.15rem] text-wood-600 font-medium mt-1 leading-tight">{item.time}</div>
                    </div>
-                   <div className="pl-6 flex-1">
-                     <div className="text-3xl font-serif font-bold text-zen-900 mb-2 flex flex-wrap items-center gap-2">
+                   <div className="pl-4 flex-1">
+                     <div className="text-[2.15rem] leading-tight font-serif font-bold text-zen-900 mb-1 flex flex-wrap items-center gap-2">
                         {item.activity}
                         {renderTags(item.involvedPeople, 'teacher_export')}
                      </div>
@@ -457,15 +458,12 @@ const VisitDetailModal: React.FC<VisitDetailModalProps> = ({ visit, onClose, onU
                      </div>
                      
                      {/* Events Grid - Strict Alignment Mode */}
-                     {/* Using items-start to ensure they hang from the top. 
-                         Changed pt-8 to pt-5 to shift time UP slightly relative to text (5% adjustment).
-                         Reduced font size to 3.4rem (approx 8% smaller than 3.7rem). 
-                     */}
+                     {/* Using items-start to ensure they hang from the top. */}
                      <div className="space-y-20 pl-4">
                         {groupedItinerary[date].map((item, i) => (
                            <div key={i} className="flex items-start group">
-                              {/* Time Column - Reduced top padding to pt-5 to shift up */}
-                              <div className="w-[280px] shrink-0 text-right pt-5">
+                              {/* Time Column - Increased top padding to pt-6 to shift DOWN relative to text (approx 5%) */}
+                              <div className="w-[280px] shrink-0 text-right pt-6">
                                   <div className="text-[3.4rem] font-bold text-wood-700 font-serif tracking-tight leading-none">
                                       {item.time.split(/[-:]/)[0]}:{item.time.split(/[-:]/)[1]}
                                   </div>
@@ -480,7 +478,7 @@ const VisitDetailModal: React.FC<VisitDetailModalProps> = ({ visit, onClose, onU
                               <div className="w-1 bg-stone-200 self-stretch rounded-full mx-12"></div>
                               
                               {/* Content Column */}
-                              {/* Activity Text has pt-0. Time has pt-5. */}
+                              {/* Activity Text has pt-0. Time has pt-6. */}
                               <div className="flex-1">
                                   <div className="text-[3.4rem] text-stone-800 font-bold leading-tight mb-4 pt-0">
                                       <span className="align-middle">{item.activity}</span>

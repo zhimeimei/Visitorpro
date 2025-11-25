@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ICONS, COLORS } from '../constants';
 import { Visit, ItineraryItem, ChecklistItem } from '../types';
@@ -44,6 +43,15 @@ const AddVisitModal: React.FC<AddVisitModalProps> = ({ onClose, onSave }) => {
       return;
     }
 
+    // Auto-parse itinerary logic:
+    // If the user is currently in parsing mode (editing text) OR if the itinerary is empty but there is text,
+    // we should prioritize the text and parse it now.
+    let finalItinerary = itinerary;
+    if ((isParsingMode || itinerary.length === 0) && rawItineraryText.trim()) {
+        const contextDate = startDate || new Date().toISOString().split('T')[0];
+        finalItinerary = parseSmartItinerary(rawItineraryText, contextDate);
+    }
+
     const initialChecklist: ChecklistItem[] = [
       { id: `c-init-1`, title: '住宿安排', isCompleted: false, details: accommodation, category: 'hotel' },
       { id: `c-init-2`, title: '车辆接送', isCompleted: false, details: vehicleDetails, category: 'vehicle' },
@@ -61,7 +69,7 @@ const AddVisitModal: React.FC<AddVisitModalProps> = ({ onClose, onSave }) => {
       liaison: liaison || '待定',
       accommodation: accommodation || '未安排',
       checklist: initialChecklist,
-      itinerary
+      itinerary: finalItinerary
     };
 
     onSave(newVisit);

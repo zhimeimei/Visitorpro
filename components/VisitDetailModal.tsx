@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from 'react';
 import { Visit, ChecklistItem } from '../types';
 import { ICONS } from '../constants';
@@ -131,7 +130,14 @@ const VisitDetailModal: React.FC<VisitDetailModalProps> = ({ visit, onClose, onU
       const canvas = await html2canvas(ref.current, {
         scale: 2,
         backgroundColor: '#fdfcfb', // Match rice paper
-        useCORS: true
+        useCORS: true,
+        windowWidth: 1920, // FORCE DESKTOP VIEWPORT FOR CONSISTENCY
+        windowHeight: 1080,
+        onclone: (clonedDoc: Document) => {
+          // Critical fix for mobile: Force root font size to 16px to ensure rem units calculate correctly
+          // This prevents the "zoomed in" or "misaligned" look on mobile devices
+          clonedDoc.documentElement.style.fontSize = '16px';
+        }
       });
       const dataUrl = canvas.toDataURL('image/png');
       setPreviewImage(dataUrl);
@@ -399,8 +405,9 @@ const VisitDetailModal: React.FC<VisitDetailModalProps> = ({ visit, onClose, onU
         )}
 
         {/* --- Hidden Container: Teacher Schedule (Only shows Teacher tags) --- */}
+        {/* Force text-[16px] to prevent rem scaling issues on mobile devices during screenshot */}
         <div className="absolute -left-[9999px] top-0">
-          <div ref={teacherScheduleRef} className="w-[800px] bg-stone-50 p-10 rice-paper-texture">
+          <div ref={teacherScheduleRef} className="w-[800px] bg-stone-50 p-10 rice-paper-texture text-[16px]">
             <div className="text-center pb-4 mb-4 border-b border-stone-200">
                <div className="inline-block w-16 h-16 border-2 border-zen-700 rounded-full flex items-center justify-center mb-3">
                    <span className="font-serif font-bold text-4xl text-zen-700">师</span>
@@ -428,7 +435,8 @@ const VisitDetailModal: React.FC<VisitDetailModalProps> = ({ visit, onClose, onU
           </div>
 
           {/* --- Hidden Container: Full Itinerary (Phone Optimized) --- */}
-          <div ref={fullItineraryRef} className="w-[1242px] bg-stone-50 rice-paper-texture flex flex-col px-24 py-32 font-serif">
+          {/* Force text-[16px] to prevent rem scaling issues on mobile devices during screenshot */}
+          <div ref={fullItineraryRef} className="w-[1242px] bg-stone-50 rice-paper-texture flex flex-col px-24 py-32 font-serif text-[16px]">
             
             {/* Header Section */}
             <div className="text-center pb-24 border-b-[4px] border-wood-200/50">

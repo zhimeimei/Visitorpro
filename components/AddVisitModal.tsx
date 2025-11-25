@@ -73,7 +73,7 @@ const AddVisitModal: React.FC<AddVisitModalProps> = ({ onClose, onSave }) => {
     return (
         <div className="inline-flex flex-wrap gap-1 ml-2 align-middle">
             {people.map((p, idx) => (
-                 <span key={idx} className={`text-[10px] px-1.5 py-0.5 rounded font-serif ${p === 'Teacher' ? 'bg-wood-50 text-wood-600 border border-wood-100' : 'bg-zen-50 text-zen-600 border border-zen-100'}`}>
+                 <span key={idx} className={`text-[10px] px-1.5 py-0.5 rounded font-serif ${p === 'Teacher' ? 'bg-wood-600 text-stone-50 border border-wood-600' : 'bg-zen-600 text-stone-50 border border-zen-600'}`}>
                     {p === 'Teacher' ? '老师' : p}
                 </span>
             ))}

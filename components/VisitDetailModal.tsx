@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from 'react';
 import { Visit, ChecklistItem } from '../types';
 import { ICONS } from '../constants';
@@ -162,7 +161,7 @@ const VisitDetailModal: React.FC<VisitDetailModalProps> = ({ visit, onClose, onU
         if (!hasTeacher) return null;
         
         return (
-             <span className="bg-wood-50 text-wood-600 border border-wood-100 text-[0.65em] px-1.5 py-0.5 rounded font-serif whitespace-nowrap align-middle ml-2">
+             <span className="bg-wood-600 text-stone-50 border border-wood-600 text-[0.65em] px-1.5 py-0.5 rounded font-serif whitespace-nowrap align-middle ml-2">
                 老师
             </span>
         );
@@ -175,43 +174,25 @@ const VisitDetailModal: React.FC<VisitDetailModalProps> = ({ visit, onClose, onU
     if (!people || people.length === 0) return null;
 
     const isPhone = context === 'phone_export';
-    
-    // --- PHONE EXPORT STYLE ---
-    if (isPhone) {
-        // Increased font size (~30% bigger than previous 1.8rem -> 2.5rem)
-        // Bolder colors for "more eye-catching" look
-        // Adjusted positioning: relative top-3 (moved down ~20% relative to text line height)
-        // Center alignment: inline-flex + items-center + justify-center
-        return (
-            <span className="inline-flex flex-wrap gap-2 ml-4 relative top-3">
-                {people.map((p, idx) => (
-                    <span 
-                        key={idx} 
-                        className={`text-[2.5rem] px-6 py-1.5 rounded-xl border-2 font-serif font-medium inline-flex items-center justify-center whitespace-nowrap shadow-sm
-                            ${p === 'Teacher' 
-                                ? 'bg-[#e8dcc5] text-[#5c4a2e] border-[#cfc0a3]' // Bolder Wood/Gold
-                                : 'bg-[#cce3dc] text-[#344e46] border-[#abcbc2]' // Bolder Celadon/Green
-                            }`}
-                        style={{ minHeight: '1.3em' }} // Helper for vertical center
-                    >
-                        {p === 'Teacher' ? '老师' : p}
-                    </span>
-                ))}
-            </span>
-        );
-    }
+    // Optimized for Phone Export Alignment
+    // Use inline-flex to center text in background
+    // leading-none to remove extra height from text node
+    // h-[3.5rem] to match relative visual weight of 3.4rem text
+    // items-center justify-center for perfect centering
+    // translate-y-[10%] moves the tag down by 10% of its height
+    const baseClasses = isPhone 
+        ? "inline-flex items-center justify-center text-[2.1rem] h-[3.5rem] px-5 rounded-xl border ml-4 align-middle leading-none transform translate-y-[10%]" 
+        : "text-[0.65em] px-1.5 py-0.5 rounded border ml-2 align-middle";
 
-    // --- WEB STYLE ---
-    const baseClasses = "text-[0.65em] px-1.5 py-0.5 rounded border ml-2 align-middle";
     return (
-        <span className="inline-flex flex-wrap gap-1 align-middle">
+        <span className={`inline-flex flex-wrap align-middle ${isPhone ? 'gap-2' : 'gap-1'}`}>
             {people.map((p, idx) => (
                 <span 
                     key={idx} 
                     className={`${baseClasses} font-serif whitespace-nowrap
                         ${p === 'Teacher' 
-                            ? 'bg-wood-50 text-wood-600 border-wood-200' 
-                            : 'bg-zen-50 text-zen-600 border-zen-200'
+                            ? 'bg-wood-600 text-stone-50 border-wood-600' 
+                            : 'bg-zen-600 text-stone-50 border-zen-600'
                         }`}
                 >
                     {p === 'Teacher' ? '老师' : p}
@@ -472,9 +453,9 @@ const VisitDetailModal: React.FC<VisitDetailModalProps> = ({ visit, onClose, onU
                {sortedDates.map((date, idx) => (
                   <div key={idx} className="relative">
                      {/* Date Header */}
-                     {/* Font reduced by 10% (from 6rem to 5.4rem) */}
                      <div className="flex items-end gap-8 mb-16 border-l-8 border-zen-600 pl-8">
-                        <h2 className="text-[5.4rem] font-bold text-zen-800 leading-none">{date}</h2>
+                        {/* Reduced font size from 6rem to 5.1rem (~15%) */}
+                        <h2 className="text-[5.1rem] font-bold text-zen-800 leading-none">{date}</h2>
                      </div>
                      
                      {/* Events Grid - Strict Alignment Mode */}
@@ -501,10 +482,10 @@ const VisitDetailModal: React.FC<VisitDetailModalProps> = ({ visit, onClose, onU
                               <div className="w-1 bg-stone-200 self-stretch rounded-full mx-12"></div>
                               
                               {/* Content Column */}
-                              {/* Activity Text has pt-0. Time has pt-4. This effectively moves time down relative to text. */}
+                              {/* Activity Text has pt-0 or pt-1. Time has pt-4. This effectively moves time down relative to text. */}
                               <div className="flex-1">
-                                  <div className="text-[3.4rem] text-stone-800 font-bold leading-none mb-4 pt-0">
-                                      <span className="inline align-middle">{item.activity}</span>
+                                  <div className="text-[3.4rem] text-stone-800 font-bold leading-tight mb-4 pt-0">
+                                      <span className="align-middle">{item.activity}</span>
                                       {renderTags(item.involvedPeople, 'phone_export')}
                                   </div>
                                   
